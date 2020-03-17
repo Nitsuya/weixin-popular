@@ -1,18 +1,11 @@
 package weixin.popular.api;
 
-import java.nio.charset.Charset;
-
 import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.client.methods.RequestBuilder;
 import org.apache.http.entity.StringEntity;
-
 import weixin.popular.bean.BaseResult;
+import weixin.popular.bean.card.AbstractCard;
 import weixin.popular.bean.card.CardType;
-import weixin.popular.bean.card.CashCard;
-import weixin.popular.bean.card.DiscountCard;
-import weixin.popular.bean.card.GeneralCouponCard;
-import weixin.popular.bean.card.GiftCard;
-import weixin.popular.bean.card.GrouponCard;
 import weixin.popular.bean.card.batchget.BatchGet;
 import weixin.popular.bean.card.batchget.BatchGetResult;
 import weixin.popular.bean.card.code.checkcode.CodeCheckCode;
@@ -31,37 +24,43 @@ import weixin.popular.bean.card.code.unavailable.CodeUnavailable;
 import weixin.popular.bean.card.code.update.CodeUpdate;
 import weixin.popular.bean.card.create.Create;
 import weixin.popular.bean.card.create.CreateResult;
-import weixin.popular.bean.card.get.AbstractResult;
-import weixin.popular.bean.card.get.GetCashResult;
-import weixin.popular.bean.card.get.GetDiscountResult;
-import weixin.popular.bean.card.get.GetGeneralCouponResult;
-import weixin.popular.bean.card.get.GetGrouponResult;
-import weixin.popular.bean.card.get.GetResult;
+import weixin.popular.bean.card.get.*;
 import weixin.popular.bean.card.landingpage.create.LandingPageCreate;
 import weixin.popular.bean.card.landingpage.create.LandingPageCreateResult;
+import weixin.popular.bean.card.membercard.activate.MembercardActivate;
+import weixin.popular.bean.card.membercard.activatetempinfo.get.MembercardActivatetempinfoGetResult;
+import weixin.popular.bean.card.membercard.activateuserform.set.MembercardActivateuserformSet;
+import weixin.popular.bean.card.membercard.updateuser.MembercardUpdateuser;
+import weixin.popular.bean.card.membercard.updateuser.MembercardUpdateuserResult;
+import weixin.popular.bean.card.membercard.userinfo.get.MembercardUserinfoGet;
+import weixin.popular.bean.card.membercard.userinfo.get.MembercardUserinfoResult;
 import weixin.popular.bean.card.modifystock.ModifyStock;
 import weixin.popular.bean.card.mpnews.gethtml.MpNewsGetHtml;
 import weixin.popular.bean.card.mpnews.gethtml.MpNewsGetHtmlResult;
 import weixin.popular.bean.card.paycell.set.PaySellSet;
+import weixin.popular.bean.card.paygiftcard.add.PaygiftcardAdd;
+import weixin.popular.bean.card.paygiftcard.add.PaygiftcardAddResult;
+import weixin.popular.bean.card.paygiftcard.batchget.PaygiftcardBatchget;
+import weixin.popular.bean.card.paygiftcard.batchget.PaygiftcardBatchgetResult;
+import weixin.popular.bean.card.paygiftcard.getbyid.PaygiftcardGetbyidResult;
 import weixin.popular.bean.card.qrcode.create.QrCodeCreate;
 import weixin.popular.bean.card.qrcode.create.QrCodeCreateMultiple;
 import weixin.popular.bean.card.qrcode.create.QrCodeCreateResult;
 import weixin.popular.bean.card.testwhitelist.set.TestWhiteListSet;
-import weixin.popular.bean.card.update.UpdateCash;
-import weixin.popular.bean.card.update.UpdateDiscount;
-import weixin.popular.bean.card.update.UpdateGeneralCoupon;
-import weixin.popular.bean.card.update.UpdateGift;
-import weixin.popular.bean.card.update.UpdateGroupon;
+import weixin.popular.bean.card.update.AbstractUpdate;
 import weixin.popular.bean.card.update.UpdateResult;
 import weixin.popular.bean.card.user.getcardlist.UserGetCardList;
 import weixin.popular.bean.card.user.getcardlist.UserGetCardListResult;
 import weixin.popular.client.LocalHttpClient;
+import weixin.popular.client.StringResponseHandler;
 import weixin.popular.util.JsonUtil;
+
+import java.nio.charset.Charset;
 
 /**
  * 微信卡券
  * 
- * @author Moyq5
+ * @author Moyq5, Nitsuya
  *
  */
 public class CardAPI extends BaseAPI {
@@ -90,8 +89,7 @@ public class CardAPI extends BaseAPI {
 				.addParameter(PARAM_ACCESS_TOKEN, API.accessToken(accessToken))
 				.setEntity(new StringEntity(postJson, Charset.forName("utf-8")))
 				.build();
-		return LocalHttpClient.executeJsonResult(httpUriRequest,
-				BatchGetResult.class);
+		return LocalHttpClient.executeJsonResult(httpUriRequest, BatchGetResult.class);
 	}
 
 	/**
@@ -118,8 +116,7 @@ public class CardAPI extends BaseAPI {
 				.addParameter(PARAM_ACCESS_TOKEN, API.accessToken(accessToken))
 				.setEntity(new StringEntity(postJson, Charset.forName("utf-8")))
 				.build();
-		return LocalHttpClient.executeJsonResult(httpUriRequest,
-				CodeCheckCodeResult.class);
+		return LocalHttpClient.executeJsonResult(httpUriRequest, CodeCheckCodeResult.class);
 	}
 
 	/**
@@ -146,8 +143,7 @@ public class CardAPI extends BaseAPI {
 				.addParameter(PARAM_ACCESS_TOKEN, API.accessToken(accessToken))
 				.setEntity(new StringEntity(postJson, Charset.forName("utf-8")))
 				.build();
-		return LocalHttpClient.executeJsonResult(httpUriRequest,
-				CodeConsumeResult.class);
+		return LocalHttpClient.executeJsonResult(httpUriRequest, CodeConsumeResult.class);
 	}
 
 	/**
@@ -182,8 +178,7 @@ public class CardAPI extends BaseAPI {
 				.addParameter(PARAM_ACCESS_TOKEN, API.accessToken(accessToken))
 				.setEntity(new StringEntity(postJson, Charset.forName("utf-8")))
 				.build();
-		return LocalHttpClient.executeJsonResult(httpUriRequest,
-				CodeDecryptResult.class);
+		return LocalHttpClient.executeJsonResult(httpUriRequest, CodeDecryptResult.class);
 	}
 
 	/**
@@ -210,8 +205,7 @@ public class CardAPI extends BaseAPI {
 				.addParameter(PARAM_ACCESS_TOKEN, API.accessToken(accessToken))
 				.setEntity(new StringEntity(postJson, Charset.forName("utf-8")))
 				.build();
-		return LocalHttpClient.executeJsonResult(httpUriRequest,
-				CodeDepositResult.class);
+		return LocalHttpClient.executeJsonResult(httpUriRequest, CodeDepositResult.class);
 	}
 
 	/**
@@ -238,8 +232,7 @@ public class CardAPI extends BaseAPI {
 				.addParameter(PARAM_ACCESS_TOKEN, API.accessToken(accessToken))
 				.setEntity(new StringEntity(postJson, Charset.forName("utf-8")))
 				.build();
-		return LocalHttpClient.executeJsonResult(httpUriRequest,
-				CodeGetResult.class);
+		return LocalHttpClient.executeJsonResult(httpUriRequest, CodeGetResult.class);
 	}
 
 	/**
@@ -249,8 +242,7 @@ public class CardAPI extends BaseAPI {
 	 * @return result  
 	 */
 	public static CodeGetDepositCountResult codeGetDepositCount(String accessToken, CodeGetDepositCount codeCount) {
-		return codeGetDepositCount(accessToken,
-				JsonUtil.toJSONString(codeCount));
+		return codeGetDepositCount(accessToken, JsonUtil.toJSONString(codeCount));
 	}
 
 	/**
@@ -267,8 +259,7 @@ public class CardAPI extends BaseAPI {
 				.addParameter(PARAM_ACCESS_TOKEN, API.accessToken(accessToken))
 				.setEntity(new StringEntity(postJson, Charset.forName("utf-8")))
 				.build();
-		return LocalHttpClient.executeJsonResult(httpUriRequest,
-				CodeGetDepositCountResult.class);
+		return LocalHttpClient.executeJsonResult(httpUriRequest, CodeGetDepositCountResult.class);
 	}
 
 	/**
@@ -278,8 +269,7 @@ public class CardAPI extends BaseAPI {
 	 * @return result   
 	 */
 	public static BaseResult codeUnavailable(String accessToken, CodeUnavailable codeUnavailable) {
-		return codeUnavailable(accessToken,
-				JsonUtil.toJSONString(codeUnavailable));
+		return codeUnavailable(accessToken, JsonUtil.toJSONString(codeUnavailable));
 	}
 
 	/**
@@ -296,8 +286,7 @@ public class CardAPI extends BaseAPI {
 				.addParameter(PARAM_ACCESS_TOKEN, API.accessToken(accessToken))
 				.setEntity(new StringEntity(postJson, Charset.forName("utf-8")))
 				.build();
-		return LocalHttpClient.executeJsonResult(httpUriRequest,
-				BaseResult.class);
+		return LocalHttpClient.executeJsonResult(httpUriRequest, BaseResult.class);
 	}
 
 	/**
@@ -334,8 +323,7 @@ public class CardAPI extends BaseAPI {
 				.addParameter(PARAM_ACCESS_TOKEN, API.accessToken(accessToken))
 				.setEntity(new StringEntity(postJson, Charset.forName("utf-8")))
 				.build();
-		return LocalHttpClient.executeJsonResult(httpUriRequest,
-				BaseResult.class);
+		return LocalHttpClient.executeJsonResult(httpUriRequest, BaseResult.class);
 	}
 
 	/**
@@ -348,65 +336,18 @@ public class CardAPI extends BaseAPI {
 		return create(accessToken, JsonUtil.toJSONString(card));
 	}
 
-	/**
-	 * 创建代金券
-	 * @param accessToken accessToken
-	 * @param cashCard cashCard
-	 * @return result
-	 */
-	public static CreateResult create(String accessToken, CashCard cashCard) {
-		Create<CashCard> card = new Create<CashCard>();
-		card.setCard(cashCard);
-		return create(accessToken, card);
-	}
-
-	/**
-	 * 创建折扣券
-	 * @param accessToken accessToken
-	 * @param discountCard discountCard
-	 * @return result
-	 */
-	public static CreateResult create(String accessToken, DiscountCard discountCard) {
-		Create<DiscountCard> card = new Create<DiscountCard>();
-		card.setCard(discountCard);
-		return create(accessToken, card);
-	}
-
-	/**
-	 * 创建优惠券
-	 * @param accessToken accessToken
-	 * @param generalCouponCard generalCouponCard
-	 * @return result
-	 */
-	public static CreateResult create(String accessToken, GeneralCouponCard generalCouponCard) {
-		Create<GeneralCouponCard> card = new Create<GeneralCouponCard>();
-		card.setCard(generalCouponCard);
-		return create(accessToken, card);
-	}
-
-	/**
-	 * 创建兑换券
-	 * @param accessToken accessToken
-	 * @param giftCard giftCard
-	 * @return result
-	 */
-	public static CreateResult create(String accessToken, GiftCard giftCard) {
-		Create<GiftCard> card = new Create<GiftCard>();
-		card.setCard(giftCard);
-		return create(accessToken, card);
-	}
-
-	/**
-	 * 创建团购券
-	 * @param accessToken accessToken
-	 * @param grouponCard grouponCard
-	 * @return result
-	 */
-	public static CreateResult create(String accessToken, GrouponCard grouponCard) {
-		Create<GrouponCard> card = new Create<GrouponCard>();
-		card.setCard(grouponCard);
-		return create(accessToken, card);
-	}
+    /**
+     * 创建卡券(代金券, 折扣券, 优惠券, 兑换券, 团购券, 会员卡)
+	 * @since 2.8.32
+     * @param accessToken accessToken
+     * @param abstractCard cashCard
+     * @return result
+     */
+    public static CreateResult create(String accessToken, AbstractCard abstractCard) {
+        Create<AbstractCard> card = new Create<>();
+        card.setCard(abstractCard);
+        return create(accessToken, card);
+    }
 
 	/**
 	 * 创建卡券
@@ -422,8 +363,7 @@ public class CardAPI extends BaseAPI {
 				.addParameter(PARAM_ACCESS_TOKEN, API.accessToken(accessToken))
 				.setEntity(new StringEntity(postJson, Charset.forName("utf-8")))
 				.build();
-		return LocalHttpClient.executeJsonResult(httpUriRequest,
-				CreateResult.class);
+		return LocalHttpClient.executeJsonResult(httpUriRequest, CreateResult.class);
 	}
 
 	/**
@@ -440,8 +380,7 @@ public class CardAPI extends BaseAPI {
 				.addParameter(PARAM_ACCESS_TOKEN, API.accessToken(accessToken))
 				.setEntity(new StringEntity(postJson, Charset.forName("utf-8")))
 				.build();
-		return LocalHttpClient.executeJsonResult(httpUriRequest,
-				BaseResult.class);
+		return LocalHttpClient.executeJsonResult(httpUriRequest, BaseResult.class);
 	}
 
 	/**
@@ -456,11 +395,12 @@ public class CardAPI extends BaseAPI {
 
 	/**
 	 * 查看卡券详情
+	 * @since 2.8.32
 	 * @param accessToken accessToken
 	 * @param postJson postJson
 	 * @return result
 	 */
-	public static GetResult<?> get(String accessToken, String postJson) {
+	public static <T extends AbstractCard> GetResult<T> get(String accessToken, String postJson) {
 		HttpUriRequest httpUriRequest = RequestBuilder
 				.post()
 				.setHeader(jsonHeader)
@@ -468,35 +408,30 @@ public class CardAPI extends BaseAPI {
 				.addParameter(PARAM_ACCESS_TOKEN, API.accessToken(accessToken))
 				.setEntity(new StringEntity(postJson, Charset.forName("utf-8")))
 				.build();
-		AbstractResult abs = LocalHttpClient.executeJsonResult(httpUriRequest, AbstractResult.class);
+
+		String resultStr = LocalHttpClient.execute(httpUriRequest, StringResponseHandler.createResponseHandler());
+        AbstractResult abs = JsonUtil.parseObject(resultStr, AbstractResult.class);
 		if (!abs.isSuccess()) {
-			return abs;
+			return (GetResult<T>) abs;
 		}
 
 		GetResult<?> result = abs;
 		CardType cardType = CardType.valueOf(abs.getCard().getCardType().toUpperCase());
 		Class<? extends GetResult<?>> clazz = null;
 		switch (cardType) {
-		case CASH:
-			clazz = GetCashResult.class;
-			break;
-		case DISCOUNT:
-			clazz = GetDiscountResult.class;
-			break;
-		case GENERAL_COUPON:
-			clazz = GetGeneralCouponResult.class;
-			break;
-		case GROUPON:
-			clazz = GetGrouponResult.class;
-			break;
-		// ...其它卡券类型
-		default:
-			break;
+			case GROUPON: 			clazz = GetGrouponResult.class;         break;
+			case DISCOUNT: 			clazz = GetDiscountResult.class;        break;
+			case GIFT:  			clazz = GetGiftResult.class;            break;
+			case CASH: 				clazz = GetCashResult.class;            break;
+			case GENERAL_COUPON: 	clazz = GetGeneralCouponResult.class;   break;
+			case MEMBER_CARD: 		clazz = GetMemberCardResult.class;   	break;
+			//其他券类型
+			default: break;
 		}
 		if (null != clazz) {
-			result = LocalHttpClient.executeJsonResult(httpUriRequest, clazz);
+			result = JsonUtil.parseObject(resultStr, clazz);
 		}
-		return result;
+		return (GetResult<T>) result;
 	}
 
 	/**
@@ -505,7 +440,7 @@ public class CardAPI extends BaseAPI {
 	 * @param cardId cardId
 	 * @return result
 	 */
-	public static GetResult<?> getByCardId(String accessToken, String cardId) {
+	public static <T extends AbstractCard> GetResult<T> getByCardId(String accessToken, String cardId) {
 		return get(accessToken, String.format("{\"card_id\": \"%s\"}", cardId));
 	}
 
@@ -516,8 +451,7 @@ public class CardAPI extends BaseAPI {
 	 * @return result
 	 */
 	public static LandingPageCreateResult landingPageCreate(String accessToken, LandingPageCreate landingPage) {
-		return landingPageCreate(accessToken,
-				JsonUtil.toJSONString(landingPage));
+		return landingPageCreate(accessToken, JsonUtil.toJSONString(landingPage));
 	}
 
 	/**
@@ -534,8 +468,7 @@ public class CardAPI extends BaseAPI {
 				.addParameter(PARAM_ACCESS_TOKEN, API.accessToken(accessToken))
 				.setEntity(new StringEntity(postJson, Charset.forName("utf-8")))
 				.build();
-		return LocalHttpClient.executeJsonResult(httpUriRequest,
-				LandingPageCreateResult.class);
+		return LocalHttpClient.executeJsonResult(httpUriRequest, LandingPageCreateResult.class);
 	}
 
 	/**
@@ -562,8 +495,7 @@ public class CardAPI extends BaseAPI {
 				.addParameter(PARAM_ACCESS_TOKEN, API.accessToken(accessToken))
 				.setEntity(new StringEntity(postJson, Charset.forName("utf-8")))
 				.build();
-		return LocalHttpClient.executeJsonResult(httpUriRequest,
-				BaseResult.class);
+		return LocalHttpClient.executeJsonResult(httpUriRequest, BaseResult.class);
 	}
 
 	/**
@@ -582,8 +514,7 @@ public class CardAPI extends BaseAPI {
 	 * @param postJson postJson
 	 * @return result
 	 */
-	public static MpNewsGetHtmlResult mpNewsGetHtml(String accessToken,
-			String postJson) {
+	public static MpNewsGetHtmlResult mpNewsGetHtml(String accessToken, String postJson) {
 		HttpUriRequest httpUriRequest = RequestBuilder
 				.post()
 				.setHeader(jsonHeader)
@@ -591,8 +522,7 @@ public class CardAPI extends BaseAPI {
 				.addParameter(PARAM_ACCESS_TOKEN, API.accessToken(accessToken))
 				.setEntity(new StringEntity(postJson, Charset.forName("utf-8")))
 				.build();
-		return LocalHttpClient.executeJsonResult(httpUriRequest,
-				MpNewsGetHtmlResult.class);
+		return LocalHttpClient.executeJsonResult(httpUriRequest, MpNewsGetHtmlResult.class);
 	}
 
 	/**
@@ -619,8 +549,7 @@ public class CardAPI extends BaseAPI {
 				.addParameter(PARAM_ACCESS_TOKEN, API.accessToken(accessToken))
 				.setEntity(new StringEntity(postJson, Charset.forName("utf-8")))
 				.build();
-		return LocalHttpClient.executeJsonResult(httpUriRequest,
-				BaseResult.class);
+		return LocalHttpClient.executeJsonResult(httpUriRequest, BaseResult.class);
 	}
 
 	/**
@@ -629,8 +558,7 @@ public class CardAPI extends BaseAPI {
 	 * @param action action
 	 * @return result
 	 */
-	public static QrCodeCreateResult qrcodeCreate(String accessToken,
-			QrCodeCreate action) {
+	public static QrCodeCreateResult qrcodeCreate(String accessToken, QrCodeCreate action) {
 		return qrcodeCreate(accessToken, JsonUtil.toJSONString(action));
 	}
 
@@ -640,8 +568,7 @@ public class CardAPI extends BaseAPI {
 	 * @param action action
 	 * @return result
 	 */
-	public static QrCodeCreateResult qrcodeCreate(String accessToken,
-			QrCodeCreateMultiple action) {
+	public static QrCodeCreateResult qrcodeCreate(String accessToken, QrCodeCreateMultiple action) {
 		return qrcodeCreate(accessToken, JsonUtil.toJSONString(action));
 	}
 
@@ -651,8 +578,7 @@ public class CardAPI extends BaseAPI {
 	 * @param postJson postJson
 	 * @return result
 	 */
-	public static QrCodeCreateResult qrcodeCreate(String accessToken,
-			String postJson) {
+	public static QrCodeCreateResult qrcodeCreate(String accessToken, String postJson) {
 		HttpUriRequest httpUriRequest = RequestBuilder
 				.post()
 				.setHeader(jsonHeader)
@@ -660,8 +586,7 @@ public class CardAPI extends BaseAPI {
 				.addParameter(PARAM_ACCESS_TOKEN, API.accessToken(accessToken))
 				.setEntity(new StringEntity(postJson, Charset.forName("utf-8")))
 				.build();
-		return LocalHttpClient.executeJsonResult(httpUriRequest,
-				QrCodeCreateResult.class);
+		return LocalHttpClient.executeJsonResult(httpUriRequest, QrCodeCreateResult.class);
 	}
 
 	/**
@@ -670,8 +595,7 @@ public class CardAPI extends BaseAPI {
 	 * @param cardSet cardSet
 	 * @return result
 	 */
-	public static BaseResult selfconsumecellSet(String accessToken,
-			PaySellSet cardSet) {
+	public static BaseResult selfconsumecellSet(String accessToken, PaySellSet cardSet) {
 		return selfconsumecellSet(accessToken, JsonUtil.toJSONString(cardSet));
 	}
 
@@ -681,8 +605,7 @@ public class CardAPI extends BaseAPI {
 	 * @param postJson postJson
 	 * @return result
 	 */
-	public static BaseResult selfconsumecellSet(String accessToken,
-			String postJson) {
+	public static BaseResult selfconsumecellSet(String accessToken, String postJson) {
 		HttpUriRequest httpUriRequest = RequestBuilder
 				.post()
 				.setHeader(jsonHeader)
@@ -690,8 +613,7 @@ public class CardAPI extends BaseAPI {
 				.addParameter(PARAM_ACCESS_TOKEN, API.accessToken(accessToken))
 				.setEntity(new StringEntity(postJson, Charset.forName("utf-8")))
 				.build();
-		return LocalHttpClient.executeJsonResult(httpUriRequest,
-				BaseResult.class);
+		return LocalHttpClient.executeJsonResult(httpUriRequest, BaseResult.class);
 	}
 
 	/**
@@ -700,8 +622,7 @@ public class CardAPI extends BaseAPI {
 	 * @param postJson postJson
 	 * @return result
 	 */
-	public static BaseResult testWhiteListSet(String accessToken,
-			String postJson) {
+	public static BaseResult testWhiteListSet(String accessToken, String postJson) {
 		HttpUriRequest httpUriRequest = RequestBuilder
 				.post()
 				.setHeader(jsonHeader)
@@ -709,8 +630,7 @@ public class CardAPI extends BaseAPI {
 				.addParameter(PARAM_ACCESS_TOKEN, API.accessToken(accessToken))
 				.setEntity(new StringEntity(postJson, Charset.forName("utf-8")))
 				.build();
-		return LocalHttpClient.executeJsonResult(httpUriRequest,
-				BaseResult.class);
+		return LocalHttpClient.executeJsonResult(httpUriRequest, BaseResult.class);
 	}
 
 	/**
@@ -719,8 +639,7 @@ public class CardAPI extends BaseAPI {
 	 * @param whiteList whiteList
 	 * @return result
 	 */
-	public static BaseResult testWhiteListSet(String accessToken,
-			TestWhiteListSet whiteList) {
+	public static BaseResult testWhiteListSet(String accessToken, TestWhiteListSet whiteList) {
 		return testWhiteListSet(accessToken, JsonUtil.toJSONString(whiteList));
 	}
 
@@ -742,58 +661,16 @@ public class CardAPI extends BaseAPI {
 				UpdateResult.class);
 	}
 
-	/**
-	 * 更改卡券信息接口(代金券)
-	 * @param accessToken accessToken
-	 * @param updateCash updateCash
-	 * @return result
-	 */
-	public static UpdateResult update(String accessToken, UpdateCash updateCash) {
-		return update(accessToken, JsonUtil.toJSONString(updateCash));
-	}
-
-	/**
-	 * 更改卡券信息接口(折扣券)
-	 * @param accessToken accessToken
-	 * @param updateDiscount updateDiscount
-	 * @return result
-	 */
-	public static UpdateResult update(String accessToken,
-			UpdateDiscount updateDiscount) {
-		return update(accessToken, JsonUtil.toJSONString(updateDiscount));
-	}
-
-	/**
-	 * 更改卡券信息接口(优惠券)
-	 * @param accessToken accessToken
-	 * @param updateGeneralCoupon updateGeneralCoupon
-	 * @return result
-	 */
-	public static UpdateResult update(String accessToken,
-			UpdateGeneralCoupon updateGeneralCoupon) {
-		return update(accessToken, JsonUtil.toJSONString(updateGeneralCoupon));
-	}
-
-	/**
-	 * 更改卡券信息接口(兑换券)
-	 * @param accessToken accessToken
-	 * @param updateGift updateGift
-	 * @return result
-	 */
-	public static UpdateResult update(String accessToken, UpdateGift updateGift) {
-		return update(accessToken, JsonUtil.toJSONString(updateGift));
-	}
-
-	/**
-	 * 更改卡券信息接口(团购券)
-	 * @param accessToken accessToken
-	 * @param updateGroupon updateGroupon
-	 * @return result
-	 */
-	public static UpdateResult update(String accessToken,
-			UpdateGroupon updateGroupon) {
-		return update(accessToken, JsonUtil.toJSONString(updateGroupon));
-	}
+    /**
+     * 更改卡券信息接口(代金券, 折扣券, 优惠券, 兑换券, 团购券, 会员卡)
+	 * @since 2.8.32
+     * @param accessToken accessToken
+     * @param abstractUpdate abstractUpdate
+     * @return result
+     */
+    public static UpdateResult update(String accessToken, AbstractUpdate abstractUpdate) {
+        return update(accessToken, JsonUtil.toJSONString(abstractUpdate));
+    }
 
 	/**
 	 * 获取用户已领取卡券
@@ -801,8 +678,7 @@ public class CardAPI extends BaseAPI {
 	 * @param postJson postJson
 	 * @return result
 	 */
-	public static UserGetCardListResult userGetCardList(String accessToken,
-			String postJson) {
+	public static UserGetCardListResult userGetCardList(String accessToken, String postJson) {
 		HttpUriRequest httpUriRequest = RequestBuilder
 				.post()
 				.setHeader(jsonHeader)
@@ -810,8 +686,7 @@ public class CardAPI extends BaseAPI {
 				.addParameter(PARAM_ACCESS_TOKEN, API.accessToken(accessToken))
 				.setEntity(new StringEntity(postJson, Charset.forName("utf-8")))
 				.build();
-		return LocalHttpClient.executeJsonResult(httpUriRequest,
-				UserGetCardListResult.class);
+		return LocalHttpClient.executeJsonResult(httpUriRequest, UserGetCardListResult.class);
 	}
 
 	/**
@@ -820,10 +695,270 @@ public class CardAPI extends BaseAPI {
 	 * @param userGetCardList userGetCardList
 	 * @return result
 	 */
-	public static UserGetCardListResult userGetCardList(String accessToken,
-			UserGetCardList userGetCardList) {
-		return userGetCardList(accessToken,
-				JsonUtil.toJSONString(userGetCardList));
+	public static UserGetCardListResult userGetCardList(String accessToken, UserGetCardList userGetCardList) {
+		return userGetCardList(accessToken, JsonUtil.toJSONString(userGetCardList));
 	}
 
+	/**
+	 * 激活会员卡
+	 * @since 2.8.32
+	 * @param accessToken accessToken
+	 * @param postJson postJson
+	 * @return
+	 */
+	public static BaseResult membercardActivate(String accessToken, String postJson){
+		HttpUriRequest httpUriRequest = RequestBuilder
+				.post()
+				.setHeader(jsonHeader)
+				.setUri(BASE_URI + "/card/membercard/activate")
+				.addParameter(PARAM_ACCESS_TOKEN, API.accessToken(accessToken))
+				.setEntity(new StringEntity(postJson, Charset.forName("utf-8")))
+				.build();
+		return LocalHttpClient.executeJsonResult(httpUriRequest, BaseResult.class);
+	}
+
+	/**
+	 * 激活会员卡
+	 * @since 2.8.32
+	 * @param accessToken accessToken
+	 * @param membercardActivate membercardActivate
+	 * @return
+	 */
+	public static BaseResult membercardActivate(String accessToken, MembercardActivate membercardActivate){
+		return membercardActivate(accessToken, JsonUtil.toJSONString(membercardActivate));
+	}
+
+
+	/**
+	 * 设置开卡字段接口
+	 * @since 2.8.32
+	 * @param accessToken
+	 * @param postJson
+	 * @return
+	 */
+	public static BaseResult membercardActivateuserformSet(String accessToken, String postJson){
+		HttpUriRequest httpUriRequest = RequestBuilder
+				.post()
+				.setHeader(jsonHeader)
+				.setUri(BASE_URI + "/card/membercard/activateuserform/set")
+				.addParameter(PARAM_ACCESS_TOKEN, API.accessToken(accessToken))
+				.setEntity(new StringEntity(postJson, Charset.forName("utf-8")))
+				.build();
+		return LocalHttpClient.executeJsonResult(httpUriRequest, BaseResult.class);
+	}
+
+	/**
+	 * 设置开卡字段接口
+	 * @since 2.8.32
+	 * @param accessToken accessToken
+	 * @param membercardActivateuserformSet membercardActivateuserformSet
+	 * @return
+	 */
+	public static BaseResult membercardActivateuserformSet(String accessToken, MembercardActivateuserformSet membercardActivateuserformSet){
+		return membercardActivate(accessToken, JsonUtil.toJSONString(membercardActivateuserformSet));
+	}
+
+	/**
+	 * 拉取会员信息接口
+	 * @since 2.8.32
+	 * @param accessToken
+	 * @param postJson
+	 * @return
+	 */
+	public static MembercardUserinfoResult membercardUserinfoGet(String accessToken, String postJson){
+		HttpUriRequest httpUriRequest = RequestBuilder
+				.post()
+				.setHeader(jsonHeader)
+				.setUri(BASE_URI + "/card/membercard/userinfo/get")
+				.addParameter(PARAM_ACCESS_TOKEN, API.accessToken(accessToken))
+				.setEntity(new StringEntity(postJson, Charset.forName("utf-8")))
+				.build();
+		return LocalHttpClient.executeJsonResult(httpUriRequest, MembercardUserinfoResult.class);
+	}
+
+	/**
+	 * 拉取会员信息接口
+	 * @since 2.8.32
+	 * @param accessToken accessToken
+	 * @param membercardUserinfoGet membercardUserinfoGet
+	 * @return
+	 */
+	public static MembercardUserinfoResult membercardUserinfoGet(String accessToken, MembercardUserinfoGet membercardUserinfoGet){
+		return membercardUserinfoGet(accessToken, JsonUtil.toJSONString(membercardUserinfoGet));
+	}
+
+	/**
+	 * 获取用户提交资料
+	 * @since 2.8.32
+	 * @param accessToken
+	 * @param postJson
+	 * @return
+	 */
+	public static MembercardActivatetempinfoGetResult membercardActivatetempinfoGet(String accessToken, String postJson){
+		HttpUriRequest httpUriRequest = RequestBuilder
+				.post()
+				.setHeader(jsonHeader)
+				.setUri(BASE_URI + "/card/membercard/activatetempinfo/get")
+				.addParameter(PARAM_ACCESS_TOKEN, API.accessToken(accessToken))
+				.setEntity(new StringEntity(postJson, Charset.forName("utf-8")))
+				.build();
+		return LocalHttpClient.executeJsonResult(httpUriRequest, MembercardActivatetempinfoGetResult.class);
+	}
+
+	/**
+	 * 获取用户提交资料
+	 * @since 2.8.32
+	 * @param accessToken accessToken
+	 * @param activateTicket activateTicket
+	 * @return result
+	 */
+	public static MembercardActivatetempinfoGetResult membercardActivatetempinfoGetByActivateTicket(String accessToken, String activateTicket) {
+		return membercardActivatetempinfoGet(accessToken, String.format("{\"activate_ticket\": \"%s\"}", activateTicket));
+	}
+
+	/**
+	 * 更新会员信息
+	 * @since 2.8.32
+	 * @param accessToken
+	 * @param postJson
+	 * @return
+	 */
+	public static MembercardUpdateuserResult membercardUpdateuser(String accessToken, String postJson){
+		HttpUriRequest httpUriRequest = RequestBuilder
+				.post()
+				.setHeader(jsonHeader)
+				.setUri(BASE_URI + "/card/membercard/updateuser")
+				.addParameter(PARAM_ACCESS_TOKEN, API.accessToken(accessToken))
+				.setEntity(new StringEntity(postJson, Charset.forName("utf-8")))
+				.build();
+		return LocalHttpClient.executeJsonResult(httpUriRequest, MembercardUpdateuserResult.class);
+	}
+
+	/**
+	 * 更新会员信息
+	 * @since 2.8.32
+	 * @param accessToken accessToken
+	 * @param membercardUpdateuser membercardUpdateuser
+	 * @return
+	 */
+	public static MembercardUpdateuserResult membercardUpdateuser(String accessToken, MembercardUpdateuser membercardUpdateuser){
+		return membercardUpdateuser(accessToken, JsonUtil.toJSONString(membercardUpdateuser));
+	}
+
+	/**
+	 * 设置支付后投放卡券
+	 * @since 2.8.32
+	 * @param accessToken
+	 * @param postJson
+	 * @return
+	 */
+	public static PaygiftcardAddResult paygiftcardAdd(String accessToken, String postJson){
+		HttpUriRequest httpUriRequest = RequestBuilder
+				.post()
+				.setHeader(jsonHeader)
+				.setUri(BASE_URI + "/card/paygiftcard/add")
+				.addParameter(PARAM_ACCESS_TOKEN, API.accessToken(accessToken))
+				.setEntity(new StringEntity(postJson, Charset.forName("utf-8")))
+				.build();
+		return LocalHttpClient.executeJsonResult(httpUriRequest, PaygiftcardAddResult.class);
+	}
+
+	/**
+	 * 设置支付后投放卡券
+	 * @since 2.8.32
+	 * @param accessToken accessToken
+	 * @param paygiftcardAdd paygiftcardAdd
+	 * @return
+	 */
+	public static PaygiftcardAddResult paygiftcardAdd(String accessToken, PaygiftcardAdd paygiftcardAdd){
+		return paygiftcardAdd(accessToken, JsonUtil.toJSONString(paygiftcardAdd));
+	}
+
+	/**
+	 * 删除支付后投放卡券规则
+	 * @since 2.8.32
+	 * @param accessToken
+	 * @param postJson
+	 * @return
+	 */
+	public static BaseResult paygiftcardDelete(String accessToken, String postJson){
+		HttpUriRequest httpUriRequest = RequestBuilder
+				.post()
+				.setHeader(jsonHeader)
+				.setUri(BASE_URI + "/card/paygiftcard/delete")
+				.addParameter(PARAM_ACCESS_TOKEN, API.accessToken(accessToken))
+				.setEntity(new StringEntity(postJson, Charset.forName("utf-8")))
+				.build();
+		return LocalHttpClient.executeJsonResult(httpUriRequest, BaseResult.class);
+	}
+
+	/**
+	 * 删除支付后投放卡券规则
+	 * @since 2.8.32
+	 * @param accessToken accessToken
+	 * @param ruleId ruleId
+	 * @return
+	 */
+	public static BaseResult paygiftcardDeleteByRuleId(String accessToken, String ruleId){
+		return membercardActivatetempinfoGet(accessToken, String.format("{\"rule_id\": \"%s\"}", ruleId));
+	}
+
+
+	/**
+	 * 查询支付后投放卡券规则详情
+	 * @since 2.8.32
+	 * @param accessToken
+	 * @param postJson
+	 * @return
+	 */
+	public static PaygiftcardGetbyidResult paygiftcardGetbyid(String accessToken, String postJson){
+		HttpUriRequest httpUriRequest = RequestBuilder
+				.post()
+				.setHeader(jsonHeader)
+				.setUri(BASE_URI + "/card/paygiftcard/getbyid")
+				.addParameter(PARAM_ACCESS_TOKEN, API.accessToken(accessToken))
+				.setEntity(new StringEntity(postJson, Charset.forName("utf-8")))
+				.build();
+		return LocalHttpClient.executeJsonResult(httpUriRequest, PaygiftcardGetbyidResult.class);
+	}
+
+	/**
+	 * 查询支付后投放卡券规则详情
+	 * @since 2.8.32
+	 * @param accessToken accessToken
+	 * @param ruleId ruleId
+	 * @return
+	 */
+	public static PaygiftcardGetbyidResult paygiftcardGetbyidByRuleId(String accessToken, String ruleId){
+		return paygiftcardGetbyid(accessToken, String.format("{\"rule_id\": \"%s\"}", ruleId));
+	}
+
+	/**
+	 * 批量查询支付后投放卡券规则
+	 * @since 2.8.32
+	 * @param accessToken
+	 * @param postJson
+	 * @return
+	 */
+	public static PaygiftcardBatchgetResult paygiftcardBatchget(String accessToken, String postJson){
+		HttpUriRequest httpUriRequest = RequestBuilder
+				.post()
+				.setHeader(jsonHeader)
+				.setUri(BASE_URI + "/card/paygiftcard/batchget")
+				.addParameter(PARAM_ACCESS_TOKEN, API.accessToken(accessToken))
+				.setEntity(new StringEntity(postJson, Charset.forName("utf-8")))
+				.build();
+		return LocalHttpClient.executeJsonResult(httpUriRequest, PaygiftcardBatchgetResult.class);
+	}
+
+	/**
+	 * 批量查询支付后投放卡券规则
+	 * @since 2.8.32
+	 * @param accessToken accessToken
+	 * @param paygiftcardBatchget paygiftcardBatchget
+	 * @return
+	 */
+	public static PaygiftcardBatchgetResult paygiftcardBatchget(String accessToken, PaygiftcardBatchget paygiftcardBatchget){
+		return paygiftcardBatchget(accessToken, JsonUtil.toJSONString(paygiftcardBatchget));
+	}
 }

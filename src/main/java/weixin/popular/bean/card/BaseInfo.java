@@ -164,17 +164,29 @@ public class BaseInfo {
 	@JSONField(name = "custom_url_name")
 	private String customUrlName;
 
+    /**
+     * 显示在入口右侧的提示语。如“更多惊喜”。
+     */
+    @JSONField(name = "custom_url_sub_title")
+    private String customUrlSubTitle;
+
 	/**
 	 * 自定义跳转的URL。
 	 */
 	@JSONField(name = "custom_url")
 	private String customUrl;
 
-	/**
-	 * 显示在入口右侧的提示语。如“更多惊喜”。
-	 */
-	@JSONField(name = "custom_url_sub_title")
-	private String customUrlSubTitle;
+    /**
+     * 自定义跳转小程序user_name [原始ID+@app] 2.8.32
+     */
+    @JSONField(name = "custom_app_brand_user_name")
+    private String customAppBrandUserName;
+
+    /**
+     * 自定义跳转小程序页面 2.8.32
+     */
+    @JSONField(name = "custom_app_brand_pass")
+    private String customAppBrandPass;
 
 	/**
 	 * 营销场景的自定义入口名称。如，“产品介绍”。
@@ -183,16 +195,28 @@ public class BaseInfo {
 	private String promotionUrlName;
 
 	/**
+	 * 显示在营销入口右侧的提示语。如，“卖场大优惠。”。
+	 */
+	@JSONField(name = "promotion_url_sub_title")
+	private String promotionUrlSubTitle;
+
+	/**
 	 * 入口跳转外链的地址链接。
 	 */
 	@JSONField(name = "promotion_url")
 	private String promotionUrl;
 
-	/**
-	 * 显示在营销入口右侧的提示语。如，“卖场大优惠。”。
-	 */
-	@JSONField(name = "promotion_url_sub_title")
-	private String promotionUrlSubTitle;
+    /**
+     * 入口跳转小程序user_name [原始ID+@app] 2.8.32
+     */
+    @JSONField(name = "promotion_app_brand_user_name")
+    private String promotionAppBrandUserName;
+
+    /**
+     * 入口跳转小程序页面 2.8.32
+     */
+    @JSONField(name = "promotion_app_brand_pass")
+    private String promotionAppBrandPass;
 
 	/**
 	 * 第三方来源名，例如同程旅游、大众点评。<br>
@@ -201,10 +225,17 @@ public class BaseInfo {
 	private String source;
 	
 	/**
-	 * 会员卡是否支持全部门店，填写后商户门店更新时会自动同步至卡券
+	 * 会员卡是否支持全部门店，填写后商户门店更新时会自动同步至卡券 2.8.20
 	 */
 	@JSONField(name = "use_all_locations")
-	private Boolean useAllLocations;				//2.8.20
+	private Boolean useAllLocations;
+
+	/**
+	 * 支付信息 2.8.32
+	 */
+	@JSONField(name = "pay_info")
+	private PayInfo payInfo;
+
 
 	/**
 	 * 卡券的商户logo。
@@ -633,6 +664,44 @@ public class BaseInfo {
 	public void setGetCustomCodeMode(String getCustomCodeMode) {
 		this.getCustomCodeMode = getCustomCodeMode;
 	}
-	
-	
+
+	public String getCustomAppBrandUserName() {
+		return customAppBrandUserName;
+	}
+
+	public void setCustomAppBrandUserName(String customAppBrandUserName) {
+		this.customAppBrandUserName = customAppBrandUserName;
+	}
+
+	public String getCustomAppBrandPass() {
+		return customAppBrandPass;
+	}
+
+	public void setCustomAppBrandPass(String customAppBrandPass) {
+		this.customAppBrandPass = customAppBrandPass;
+	}
+
+	public String getPromotionAppBrandUserName() {
+		return promotionAppBrandUserName;
+	}
+
+	public void setPromotionAppBrandUserName(String promotionAppBrandUserName) {
+		this.promotionAppBrandUserName = promotionAppBrandUserName;
+	}
+
+	public String getPromotionAppBrandPass() {
+		return promotionAppBrandPass;
+	}
+
+	public void setPromotionAppBrandPass(String promotionAppBrandPass) {
+		this.promotionAppBrandPass = promotionAppBrandPass;
+	}
+
+	public PayInfo getPayInfo() {
+		return payInfo;
+	}
+
+	public void setPayInfo(PayInfo payInfo) {
+		this.payInfo = payInfo;
+	}
 }

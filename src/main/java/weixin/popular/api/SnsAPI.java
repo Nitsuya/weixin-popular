@@ -1,19 +1,18 @@
 package weixin.popular.api;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
-
 import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.client.methods.RequestBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import weixin.popular.bean.BaseResult;
 import weixin.popular.bean.sns.Jscode2sessionResult;
 import weixin.popular.bean.sns.SnsToken;
 import weixin.popular.bean.user.User;
 import weixin.popular.client.LocalHttpClient;
 import weixin.popular.util.EmojiUtil;
+
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 
 /**
  * 网页授权
@@ -57,7 +56,7 @@ public class SnsAPI extends BaseAPI{
 				.addParameter("code", code)
 				.addParameter("grant_type", "authorization_code")
 				.addParameter("component_appid", component_appid)
-				.addParameter("component_access_token", component_access_token)
+				.addParameter("component_access_token", API.componentAccessToken(component_access_token))
 				.build();
 		return LocalHttpClient.executeJsonResult(httpUriRequest,SnsToken.class);
 	}
@@ -94,7 +93,7 @@ public class SnsAPI extends BaseAPI{
 				.addParameter("refresh_token", refresh_token)
 				.addParameter("grant_type", "refresh_token")
 				.addParameter("component_appid", component_appid)
-				.addParameter("component_access_token", component_access_token)
+				.addParameter("component_access_token", API.componentAccessToken(component_access_token))
 				.build();
 		return LocalHttpClient.executeJsonResult(httpUriRequest,SnsToken.class);
 	}

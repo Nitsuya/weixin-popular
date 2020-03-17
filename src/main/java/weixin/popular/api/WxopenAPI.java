@@ -1,25 +1,19 @@
 package weixin.popular.api;
 
-import java.nio.charset.Charset;
-import java.util.List;
-
 import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.client.methods.RequestBuilder;
 import org.apache.http.entity.StringEntity;
-
 import weixin.popular.bean.BaseResult;
-import weixin.popular.bean.wxopen.TemplateAddResult;
-import weixin.popular.bean.wxopen.TemplateLibraryGetResult;
-import weixin.popular.bean.wxopen.TemplateLibraryListResult;
-import weixin.popular.bean.wxopen.TemplateListResult;
-import weixin.popular.bean.wxopen.Wxamplink;
-import weixin.popular.bean.wxopen.WxamplinkgetResult;
+import weixin.popular.bean.wxopen.*;
 import weixin.popular.client.LocalHttpClient;
 import weixin.popular.util.JsonUtil;
 
+import java.nio.charset.Charset;
+import java.util.List;
+
 /**
  * 微信小程序
- * @author LiYi
+ * @author LiYi, Nitsuya
  * @since 2.8.18
  */
 public class WxopenAPI extends BaseAPI {
@@ -166,5 +160,197 @@ public class WxopenAPI extends BaseAPI {
 				.setEntity(new StringEntity(json,Charset.forName("utf-8")))
 				.build();
 		return LocalHttpClient.executeJsonResult(httpUriRequest,BaseResult.class);
+	}
+
+	/**
+	 * 查询当前设置的最低基础库版本及各版本用户占比<br>
+	 * @since 2.8.32
+	 * @param access_token access_token
+	 * @return result
+	 */
+	public static GetweappsupportversionResult getweappsupportversion(String access_token){
+		HttpUriRequest httpUriRequest = RequestBuilder.post()
+				.setHeader(jsonHeader)
+				.setUri(BASE_URI + "/cgi-bin/wxopen/getweappsupportversion")
+				.addParameter(PARAM_ACCESS_TOKEN, API.accessToken(access_token))
+				.setEntity(new StringEntity("{}",Charset.forName("utf-8")))
+				.build();
+		return LocalHttpClient.executeJsonResult(httpUriRequest,GetweappsupportversionResult.class);
+	}
+
+	/**
+	 * 设置最低基础库版本<br>
+	 * @since 2.8.32
+	 * @param access_token access_token
+	 * @param version  	为已发布的基础库版本号
+	 * @return result
+	 */
+	public static BaseResult setweappsupportversion(String access_token, String version){
+		String json = String.format("{\"version\":\"%s\"}",version);
+		HttpUriRequest httpUriRequest = RequestBuilder.post()
+				.setHeader(jsonHeader)
+				.setUri(BASE_URI + "/cgi-bin/wxopen/setweappsupportversion")
+				.addParameter(PARAM_ACCESS_TOKEN, API.accessToken(access_token))
+				.setEntity(new StringEntity(json,Charset.forName("utf-8")))
+				.build();
+		return LocalHttpClient.executeJsonResult(httpUriRequest,BaseResult.class);
+	}
+
+	/**
+	 * 普通链接二维码<br>
+	 * 获取已设置的二维码规则
+	 * @since 2.8.32
+	 * @param access_token access_token
+	 * @return result
+	 */
+	public static QrcodejumpgetResult qrcodejumpget(String access_token){
+		HttpUriRequest httpUriRequest = RequestBuilder.post()
+				.setHeader(jsonHeader)
+				.setUri(BASE_URI + "/cgi-bin/wxopen/qrcodejumpget")
+				.addParameter(PARAM_ACCESS_TOKEN, API.accessToken(access_token))
+				.build();
+		return LocalHttpClient.executeJsonResult(httpUriRequest, QrcodejumpgetResult.class);
+	}
+
+	/**
+	 * 普通链接二维码<br>
+	 * 获取校验文件名称及内容
+	 * @since 2.8.32
+	 * @param access_token access_token
+	 * @return result
+	 */
+	public static QrcodejumpdownloadResult qrcodejumpdownload(String access_token){
+		HttpUriRequest httpUriRequest = RequestBuilder.post()
+				.setHeader(jsonHeader)
+				.setUri(BASE_URI + "/cgi-bin/wxopen/qrcodejumpdownload")
+				.addParameter(PARAM_ACCESS_TOKEN, API.accessToken(access_token))
+				.build();
+		return LocalHttpClient.executeJsonResult(httpUriRequest, QrcodejumpdownloadResult.class);
+	}
+
+	/**
+	 * 普通链接二维码<br>
+	 * 增加或修改二维码规则
+	 * @since 2.8.32
+	 * @param access_token access_token
+	 * @param qrcodejumpadd qrcodejumpadd
+	 * @return result
+	 */
+	public static BaseResult qrcodejumpadd(String access_token, Qrcodejumpadd qrcodejumpadd){
+		String json = JsonUtil.toJSONString(qrcodejumpadd);
+		HttpUriRequest httpUriRequest = RequestBuilder.post()
+				.setHeader(jsonHeader)
+				.setUri(BASE_URI+"/cgi-bin/wxopen/qrcodejumpadd")
+				.addParameter(PARAM_ACCESS_TOKEN, API.accessToken(access_token))
+				.setEntity(new StringEntity(json,Charset.forName("utf-8")))
+				.build();
+		return LocalHttpClient.executeJsonResult(httpUriRequest, BaseResult.class);
+	}
+
+	/**
+	 * 普通链接二维码<br>
+	 * 发布已设置的二维码规则
+	 * @since 2.8.32
+	 * @param access_token access_token
+	 * @param prefix  二维码规则
+	 * @return result
+	 */
+	public static BaseResult qrcodejumppublish(String access_token, String prefix){
+		String json = String.format("{\"prefix\":\"%s\"}",prefix);
+		HttpUriRequest httpUriRequest = RequestBuilder.post()
+				.setHeader(jsonHeader)
+				.setUri(BASE_URI + "/cgi-bin/wxopen/qrcodejumppublish")
+				.addParameter(PARAM_ACCESS_TOKEN, API.accessToken(access_token))
+				.setEntity(new StringEntity(json,Charset.forName("utf-8")))
+				.build();
+		return LocalHttpClient.executeJsonResult(httpUriRequest,BaseResult.class);
+	}
+
+	/**
+	 * 普通链接二维码<br>
+	 * 删除已设置的二维码规则
+	 * @since 2.8.32
+	 * @param access_token access_token
+	 * @param prefix  二维码规则
+	 * @return result
+	 */
+	public static BaseResult qrcodejumpdelete(String access_token, String prefix){
+		String json = String.format("{\"prefix\":\"%s\"}",prefix);
+		HttpUriRequest httpUriRequest = RequestBuilder.post()
+				.setHeader(jsonHeader)
+				.setUri(BASE_URI + "/cgi-bin/wxopen/qrcodejumpdelete")
+				.addParameter(PARAM_ACCESS_TOKEN, API.accessToken(access_token))
+				.setEntity(new StringEntity(json,Charset.forName("utf-8")))
+				.build();
+		return LocalHttpClient.executeJsonResult(httpUriRequest,BaseResult.class);
+	}
+
+	/**
+	 * <strong>类目管理</strong><br>
+	 * 获取可以设置的所有类目
+	 * @since 2.8.32
+	 * @param access_token access_token
+	 * @return result
+	 */
+	public static GetallcategoriesResult getallcategories(String access_token){
+		HttpUriRequest httpUriRequest = RequestBuilder.get()
+				.setHeader(jsonHeader)
+				.setUri(BASE_URI + "/cgi-bin/wxopen/getallcategories")
+				.addParameter(PARAM_ACCESS_TOKEN, API.accessToken(access_token))
+				.build();
+		return LocalHttpClient.executeJsonResult(httpUriRequest, GetallcategoriesResult.class);
+	}
+	/**
+	 * <strong>类目管理</strong><br>
+	 * 获取已设置的所有类目
+	 * @since 2.8.32
+	 * @param access_token access_token
+	 * @return result
+	 */
+	public static GetcategoryResult getcategory(String access_token){
+		HttpUriRequest httpUriRequest = RequestBuilder.get()
+				.setHeader(jsonHeader)
+				.setUri(BASE_URI + "/cgi-bin/wxopen/getcategory")
+				.addParameter(PARAM_ACCESS_TOKEN, API.accessToken(access_token))
+				.build();
+		return LocalHttpClient.executeJsonResult(httpUriRequest, GetcategoryResult.class);
+	}
+
+	/**
+	 * <strong>类目管理</strong><br>
+	 * 添加类目
+	 * @since 2.8.32
+	 * @param access_token access_token
+	 * @param addcategory addcategory
+	 * @return result
+	 */
+	public static BaseResult addcategory(String access_token, Addcategory addcategory){
+		String json = JsonUtil.toJSONString(addcategory);
+		HttpUriRequest httpUriRequest = RequestBuilder.post()
+				.setHeader(jsonHeader)
+				.setUri(BASE_URI+"/cgi-bin/wxopen/addcategory")
+				.addParameter(PARAM_ACCESS_TOKEN, API.accessToken(access_token))
+				.setEntity(new StringEntity(json,Charset.forName("utf-8")))
+				.build();
+		return LocalHttpClient.executeJsonResult(httpUriRequest, BaseResult.class);
+	}
+
+	/**
+	 * <strong>类目管理</strong><br>
+	 * 修改类目资质信息
+	 * @since 2.8.32
+	 * @param access_token access_token
+	 * @param modifycategory modifycategory
+	 * @return result
+	 */
+	public static BaseResult deletecategory(String access_token, Modifycategory modifycategory){
+		String json = JsonUtil.toJSONString(modifycategory);
+		HttpUriRequest httpUriRequest = RequestBuilder.post()
+				.setHeader(jsonHeader)
+				.setUri(BASE_URI+"/cgi-bin/wxopen/modifycategory")
+				.addParameter(PARAM_ACCESS_TOKEN, API.accessToken(access_token))
+				.setEntity(new StringEntity(json,Charset.forName("utf-8")))
+				.build();
+		return LocalHttpClient.executeJsonResult(httpUriRequest, BaseResult.class);
 	}
 }

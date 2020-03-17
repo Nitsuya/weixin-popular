@@ -1,15 +1,5 @@
 package weixin.popular.api;
 
-import java.awt.image.BufferedImage;
-import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
-
-import javax.imageio.ImageIO;
-
 import org.apache.http.Header;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -23,16 +13,24 @@ import org.apache.http.entity.mime.content.FileBody;
 import org.apache.http.util.EntityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import weixin.popular.bean.BaseResult;
 import weixin.popular.bean.wxa.*;
 import weixin.popular.client.LocalHttpClient;
 import weixin.popular.util.JsonUtil;
 import weixin.popular.util.StreamUtils;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
+
 /**
  * 微信小程序接口
- * @author LiYi
+ * @author LiYi, Nitsuya
  * @since 2.8.9
  */
 public class WxaAPI extends BaseAPI {
@@ -76,6 +74,43 @@ public class WxaAPI extends BaseAPI {
                 .build();
         return LocalHttpClient.executeJsonResult(httpUriRequest,BaseResult.class);
     }
+
+    /**
+     * 设置小程序名称 <br>
+     * 设置小程序名称，当名称没有命中关键词，则直接设置成功；当名称命中关键词，需提交证明材料，并需要审核
+     * @since 2.8.32
+     * @param access_token access_token
+     * @param setnickname setnickname
+     * @return result
+     */
+    public static SetnicknameResult setnickname(String access_token, Setnickname setnickname){
+        String json = JsonUtil.toJSONString(setnickname);
+        HttpUriRequest httpUriRequest = RequestBuilder.post()
+                .setHeader(jsonHeader)
+                .setUri(BASE_URI + "/wxa/setnickname")
+                .addParameter(PARAM_ACCESS_TOKEN, API.accessToken(access_token))
+                .setEntity(new StringEntity(json,Charset.forName("utf-8")))
+                .build();
+        return LocalHttpClient.executeJsonResult(httpUriRequest,SetnicknameResult.class);
+    }
+
+	/**
+	 * 查询改名审核状态 <br>
+	 * @since 2.8.32
+	 * @param access_token access_token
+	 * @param auditId 审核单id
+	 * @return result
+	 */
+	public static QuerynicknameResult api_wxa_querynickname(String access_token, String auditId){
+		String json = String.format("{\"audit_id\":\"%s\"}",auditId);
+		HttpUriRequest httpUriRequest = RequestBuilder.post()
+				.setHeader(jsonHeader)
+				.setUri(BASE_URI + "/wxa/api_wxa_querynickname")
+				.addParameter(PARAM_ACCESS_TOKEN, API.accessToken(access_token))
+				.setEntity(new StringEntity(json,Charset.forName("utf-8")))
+				.build();
+		return LocalHttpClient.executeJsonResult(httpUriRequest, QuerynicknameResult.class);
+	}
 
 	/**
 	 * 成员管理 <br>
@@ -277,6 +312,57 @@ public class WxaAPI extends BaseAPI {
 
 	/**
 	 * 代码管理<br>
+	 * 分阶段发布
+	 * @since 2.8.32
+	 * @param access_token access_token
+	 * @param grayPercentage 灰度的百分比 1 ~ 100 的整数
+	 * @return result
+	 */
+	public static BaseResult get_auditstatus(String access_token, Integer grayPercentage){
+		String json = String.format("{\"gray_percentage\":\"%s\"}", grayPercentage);
+		HttpUriRequest httpUriRequest = RequestBuilder.post()
+				.setHeader(jsonHeader)
+				.setUri(BASE_URI + "/wxa/grayrelease")
+				.addParameter(PARAM_ACCESS_TOKEN, API.accessToken(access_token))
+				.setEntity(new StringEntity(json,Charset.forName("utf-8")))
+				.build();
+		return LocalHttpClient.executeJsonResult(httpUriRequest, BaseResult.class);
+	}
+
+	/**
+	 * 代码管理
+	 * 查询当前分阶段发布详情<br>
+	 * @since 2.8.32
+	 * @param access_token access_token
+	 * @return result
+	 */
+	public static GetgrayreleaseplanResult getgrayreleaseplan(String access_token){
+		HttpUriRequest httpUriRequest = RequestBuilder.get()
+				.setHeader(jsonHeader)
+				.setUri(BASE_URI + "/wxa/getgrayreleaseplan")
+				.addParameter(PARAM_ACCESS_TOKEN, API.accessToken(access_token))
+				.build();
+		return LocalHttpClient.executeJsonResult(httpUriRequest, GetgrayreleaseplanResult.class);
+	}
+
+	/**
+	 * 代码管理
+	 * 取消分阶段发布<br>
+	 * @since 2.8.32
+	 * @param access_token access_token
+	 * @return result
+	 */
+	public static BaseResult revertgrayrelease(String access_token){
+		HttpUriRequest httpUriRequest = RequestBuilder.get()
+				.setHeader(jsonHeader)
+				.setUri(BASE_URI + "/wxa/revertgrayrelease")
+				.addParameter(PARAM_ACCESS_TOKEN, API.accessToken(access_token))
+				.build();
+		return LocalHttpClient.executeJsonResult(httpUriRequest, BaseResult.class);
+	}
+
+	/**
+	 * 代码管理<br>
 	 * 小程序审核撤回（仅供第三方代小程序调用）
 	 * @since 2.8.30
 	 * @param access_token access_token
@@ -325,6 +411,43 @@ public class WxaAPI extends BaseAPI {
 				.build();
 		return LocalHttpClient.executeJsonResult(httpUriRequest,BaseResult.class);
 	}
+
+	/**
+	 * 代码管理<br>
+	 * 查询服务商的当月提审限额和加急次数
+	 * @since 2.8.32
+	 * @param access_token access_token
+	 * @return result
+	 */
+	public static QueryquotaResult queryquota(String access_token){
+		HttpUriRequest httpUriRequest = RequestBuilder.post()
+				.setHeader(jsonHeader)
+				.setUri(BASE_URI + "/wxa/queryquota")
+				.addParameter(PARAM_ACCESS_TOKEN, API.accessToken(access_token))
+				.setEntity(new StringEntity("{}",Charset.forName("utf-8")))
+				.build();
+		return LocalHttpClient.executeJsonResult(httpUriRequest, QueryquotaResult.class);
+	}
+
+	/**
+	 * 代码管理<br>
+	 * 加急审核申请
+	 * @since 2.8.32
+	 * @param access_token access_token
+	 * @param auditid 审核单ID
+	 * @return result
+	 */
+	public static BaseResult speedupaudit(String access_token, String auditid){
+		String json = String.format("{\"auditid\":\"%s\"}", auditid);
+		HttpUriRequest httpUriRequest = RequestBuilder.post()
+				.setHeader(jsonHeader)
+				.setUri(BASE_URI + "/wxa/speedupaudit")
+				.addParameter(PARAM_ACCESS_TOKEN, API.accessToken(access_token))
+				.setEntity(new StringEntity(json,Charset.forName("utf-8")))
+				.build();
+		return LocalHttpClient.executeJsonResult(httpUriRequest,BaseResult.class);
+	}
+
 	
 	/**
 	 * 获取小程序码 A<br>
@@ -598,11 +721,11 @@ public class WxaAPI extends BaseAPI {
 	 * @param status 1表示不可搜索，0表示可搜索
 	 * @return result
 	 */
-	public static BaseResult changewxasearchtustas(String access_token,int status){
+	public static BaseResult changewxasearchstatus(String access_token,int status){
 		String json = String.format("{\"status\":%d}", status);
 		HttpUriRequest httpUriRequest = RequestBuilder.post()
 				.setHeader(jsonHeader)
-				.setUri(BASE_URI + "/wxa/changewxasearchtustas")
+				.setUri(BASE_URI + "/wxa/changewxasearchstatus")
 				.addParameter(PARAM_ACCESS_TOKEN, API.accessToken(access_token))
 				.setEntity(new StringEntity(json,Charset.forName("utf-8")))
 				.build();
@@ -624,7 +747,7 @@ public class WxaAPI extends BaseAPI {
 				.build();
 		return LocalHttpClient.executeJsonResult(httpUriRequest,GetwxasearchstatusResult.class);
 	}
-	
+
 	/**
 	 * <strong>文本检查</strong><br>
 	 * 检查一段文本是否含有违法违规内容。 <br>
@@ -702,4 +825,101 @@ public class WxaAPI extends BaseAPI {
         httpPost.setEntity(reqEntity);
 		return LocalHttpClient.executeJsonResult(httpPost,BaseResult.class);
 	}
+
+	/**
+	 * 支付后获取用户Unionid接口
+	 * @since 2.8.32
+	 * @param access_token access_token
+	 * @param openid 支付用户唯一标识
+	 * @param transactionId 微信订单号
+	 * @param mchId 商户号，和商户订单号配合使用
+	 * @param outTradeNo 商户订单号，和商户号配合使用
+	 * @return result
+	 */
+	public static GetpaidunionidResult getpaidunionid(String access_token, String openid, String transactionId, String mchId, String outTradeNo){
+		HttpUriRequest httpUriRequest = RequestBuilder.get()
+				.setHeader(jsonHeader)
+				.setUri(BASE_URI + "/wxa/getpaidunionid")
+				.addParameter(PARAM_ACCESS_TOKEN, API.accessToken(access_token))
+				.addParameter("openid", openid)
+				.addParameter("transaction_id", transactionId)
+				.addParameter("mch_id", mchId)
+				.addParameter("out_trade_no", outTradeNo)
+				.build();
+		return LocalHttpClient.executeJsonResult(httpUriRequest, GetpaidunionidResult.class);
+	}
+
+	/**
+	 * <strong>扫码关注组件</strong><br>
+	 * 获取展示的公众号信息
+	 * @since 2.8.32
+	 * @param access_token access_token
+	 * @return result
+	 */
+	public static GetshowwxaitemResult getshowwxaitem(String access_token){
+		HttpUriRequest httpUriRequest = RequestBuilder.get()
+				.setHeader(jsonHeader)
+				.setUri(BASE_URI + "/wxa/getshowwxaitem")
+				.addParameter(PARAM_ACCESS_TOKEN, API.accessToken(access_token))
+				.build();
+		return LocalHttpClient.executeJsonResult(httpUriRequest, GetshowwxaitemResult.class);
+	}
+
+	/**
+	 * <strong>扫码关注组件</strong><br>
+	 * 获取可以用来设置的公众号列表
+	 * @since 2.8.32
+	 * @param access_token access_token
+	 * @param page 页码，从0开始
+	 * @param num 每页记录数，最大为20
+	 * @return result
+	 */
+	public static GetwxamplinkforshowResult getwxamplinkforshow(String access_token, String page, String num){
+		HttpUriRequest httpUriRequest = RequestBuilder.get()
+				.setHeader(jsonHeader)
+				.setUri(BASE_URI + "/wxa/getwxamplinkforshow")
+				.addParameter(PARAM_ACCESS_TOKEN, API.accessToken(access_token))
+				.addParameter("page", page)
+				.addParameter("num", num)
+				.build();
+		return LocalHttpClient.executeJsonResult(httpUriRequest, GetwxamplinkforshowResult.class);
+	}
+
+	/**
+	 * <strong>扫码关注组件</strong><br>
+	 * 设置展示的公众号信息
+	 * @since 2.8.32
+	 * @param access_token access_token
+	 * @param updateshowwxaitem updateshowwxaitem
+	 * @return result
+	 */
+	public static BaseResult updateshowwxaitem(String access_token, Updateshowwxaitem updateshowwxaitem){
+		String json = JsonUtil.toJSONString(updateshowwxaitem);
+		HttpUriRequest httpUriRequest = RequestBuilder.post()
+				.setHeader(jsonHeader)
+				.setUri(BASE_URI + "/wxa/updateshowwxaitem")
+				.addParameter(PARAM_ACCESS_TOKEN, API.accessToken(access_token))
+				.setEntity(new StringEntity(json,Charset.forName("utf-8")))
+				.build();
+		return LocalHttpClient.executeJsonResult(httpUriRequest, BaseResult.class);
+	}
+
+	/**
+	 * 小程序插件管理
+	 * @since 2.8.32
+	 * @param access_token access_token
+	 * @param plugin plugin
+	 * @return result
+	 */
+	public static PluginResult plugin(String access_token, Plugin plugin){
+		String json = JsonUtil.toJSONString(plugin);
+		HttpUriRequest httpUriRequest = RequestBuilder.post()
+				.setHeader(jsonHeader)
+				.setUri(BASE_URI + "/wxa/plugin")
+				.addParameter(PARAM_ACCESS_TOKEN, API.accessToken(access_token))
+				.setEntity(new StringEntity(json,Charset.forName("utf-8")))
+				.build();
+		return LocalHttpClient.executeJsonResult(httpUriRequest, PluginResult.class);
+	}
+
 }

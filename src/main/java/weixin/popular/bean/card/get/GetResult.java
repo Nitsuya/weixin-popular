@@ -7,9 +7,9 @@ import weixin.popular.bean.card.AbstractCard;
  * 
  * @author Moyq5
  *
- * @param <T>可以是CreateCash、CreateDiscount、CreateGeneralCoupon、CreateGift、CreateGroupon
+ * @param <T>可以是CashCard、DiscountCard、GeneralCouponCard、GiftCard、GrouponCard、MemberCardCard
  */
-public class GetResult<T extends AbstractCard> extends BaseResult {
+public abstract class GetResult<T extends AbstractCard> extends BaseResult {
 
 	private T card;
 
@@ -19,5 +19,12 @@ public class GetResult<T extends AbstractCard> extends BaseResult {
 
 	public void setCard(T card) {
 		this.card = card;
+	}
+
+	public <R extends GetResult> R restore(){
+		if(!this.isSuccess()){
+			return null;
+		}
+		return (R)this;
 	}
 }

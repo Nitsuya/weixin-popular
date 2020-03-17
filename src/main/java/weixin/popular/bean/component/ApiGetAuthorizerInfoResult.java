@@ -1,8 +1,8 @@
 package weixin.popular.bean.component;
 
-import java.util.List;
-
 import weixin.popular.bean.BaseResult;
+
+import java.util.List;
 
 public class ApiGetAuthorizerInfoResult extends BaseResult {
 
@@ -45,6 +45,10 @@ public class ApiGetAuthorizerInfoResult extends BaseResult {
 		private String alias;
 		
 		private String qrcode_url;
+
+		private String signature;
+
+		private MiniProgramInfo MiniProgramInfo;
 
 		public String getNick_name() {
 			return nick_name;
@@ -116,6 +120,22 @@ public class ApiGetAuthorizerInfoResult extends BaseResult {
 
 		public void setQrcode_url(String qrcode_url) {
 			this.qrcode_url = qrcode_url;
+		}
+
+		public String getSignature() {
+			return signature;
+		}
+
+		public void setSignature(String signature) {
+			this.signature = signature;
+		}
+
+		public Authorizer_info.MiniProgramInfo getMiniProgramInfo() {
+			return MiniProgramInfo;
+		}
+
+		public void setMiniProgramInfo(Authorizer_info.MiniProgramInfo miniProgramInfo) {
+			MiniProgramInfo = miniProgramInfo;
 		}
 
 		public static class Service_type_info {
@@ -196,6 +216,100 @@ public class ApiGetAuthorizerInfoResult extends BaseResult {
 				this.open_shake = open_shake;
 			}
 
+		}
+
+		public static class MiniProgramInfo {
+
+			private Network network;
+
+			private List<Category> categories;
+
+			private Integer visit_status;
+
+			public Network getNetwork() {
+				return network;
+			}
+
+			public void setNetwork(Network network) {
+				this.network = network;
+			}
+
+			public List<Category> getCategories() {
+				return categories;
+			}
+
+			public void setCategories(List<Category> categories) {
+				this.categories = categories;
+			}
+
+			public Integer getVisit_status() {
+				return visit_status;
+			}
+			public void setVisit_status(Integer visit_status) {
+				this.visit_status = visit_status;
+			}
+
+			public static class Network {
+
+				private List<String> RequestDomain;
+				private List<String> WsRequestDomain;
+				private List<String> UploadDomain;
+				private List<String> DownloadDomain;
+
+				public List<String> getRequestDomain() {
+					return RequestDomain;
+				}
+
+				public void setRequestDomain(List<String> requestDomain) {
+					RequestDomain = requestDomain;
+				}
+
+				public List<String> getWsRequestDomain() {
+					return WsRequestDomain;
+				}
+
+				public void setWsRequestDomain(List<String> wsRequestDomain) {
+					WsRequestDomain = wsRequestDomain;
+				}
+
+				public List<String> getUploadDomain() {
+					return UploadDomain;
+				}
+
+				public void setUploadDomain(List<String> uploadDomain) {
+					UploadDomain = uploadDomain;
+				}
+
+				public List<String> getDownloadDomain() {
+					return DownloadDomain;
+				}
+
+				public void setDownloadDomain(List<String> downloadDomain) {
+					DownloadDomain = downloadDomain;
+				}
+			}
+
+			public static class Category {
+
+				private String first;
+				private String second;
+
+				public String getFirst() {
+					return first;
+				}
+
+				public void setFirst(String first) {
+					this.first = first;
+				}
+
+				public String getSecond() {
+					return second;
+				}
+
+				public void setSecond(String second) {
+					this.second = second;
+				}
+			}
 		}
 
 	}
