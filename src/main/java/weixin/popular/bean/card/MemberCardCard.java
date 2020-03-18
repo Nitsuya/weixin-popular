@@ -1,5 +1,7 @@
 package weixin.popular.bean.card;
 
+import com.alibaba.fastjson.annotation.JSONField;
+
 /**
  * 会员卡
  * 
@@ -8,6 +10,7 @@ package weixin.popular.bean.card;
  */
 public class MemberCardCard extends AbstractCard {
 
+	@JSONField(name = "member_card")
 	private MemberCard memberCard;
 
 	public MemberCardCard() {

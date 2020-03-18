@@ -40,4 +40,68 @@ public class BonusRule {
     /** 抵扣条件，单笔最多使用xx积分*/
     @JSONField(name = "max_reduce_bonus")
     private Integer maxReduceBonus;
+
+    public Integer getCostMoneyUnit() {
+        return costMoneyUnit;
+    }
+
+    public void setCostMoneyUnit(Integer costMoneyUnit) {
+        this.costMoneyUnit = costMoneyUnit;
+    }
+
+    public Integer getIncreaseBonus() {
+        return increaseBonus;
+    }
+
+    public void setIncreaseBonus(Integer increaseBonus) {
+        this.increaseBonus = increaseBonus;
+    }
+
+    public Integer getMaxIncreaseBonus() {
+        return maxIncreaseBonus;
+    }
+
+    public void setMaxIncreaseBonus(Integer maxIncreaseBonus) {
+        this.maxIncreaseBonus = maxIncreaseBonus;
+    }
+
+    public Integer getInitIncreaseBonus() {
+        return initIncreaseBonus;
+    }
+
+    public void setInitIncreaseBonus(Integer initIncreaseBonus) {
+        this.initIncreaseBonus = initIncreaseBonus;
+    }
+
+    public Integer getCostBonusUnit() {
+        return costBonusUnit;
+    }
+
+    public void setCostBonusUnit(Integer costBonusUnit) {
+        this.costBonusUnit = costBonusUnit;
+    }
+
+    public Integer getReduceMoney() {
+        return reduceMoney;
+    }
+
+    public void setReduceMoney(Integer reduceMoney) {
+        this.reduceMoney = reduceMoney;
+    }
+
+    public Integer getLeastMoneyToUseBonus() {
+        return leastMoneyToUseBonus;
+    }
+
+    public void setLeastMoneyToUseBonus(Integer leastMoneyToUseBonus) {
+        this.leastMoneyToUseBonus = leastMoneyToUseBonus;
+    }
+
+    public Integer getMaxReduceBonus() {
+        return maxReduceBonus;
+    }
+
+    public void setMaxReduceBonus(Integer maxReduceBonus) {
+        this.maxReduceBonus = maxReduceBonus;
+    }
 }

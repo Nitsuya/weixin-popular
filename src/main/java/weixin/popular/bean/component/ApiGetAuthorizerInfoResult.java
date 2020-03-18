@@ -255,6 +255,8 @@ public class ApiGetAuthorizerInfoResult extends BaseResult {
 				private List<String> WsRequestDomain;
 				private List<String> UploadDomain;
 				private List<String> DownloadDomain;
+				private List<String> BizDomain;
+				private List<String> UDPDomain;
 
 				public List<String> getRequestDomain() {
 					return RequestDomain;
@@ -287,7 +289,23 @@ public class ApiGetAuthorizerInfoResult extends BaseResult {
 				public void setDownloadDomain(List<String> downloadDomain) {
 					DownloadDomain = downloadDomain;
 				}
-			}
+
+                public List<String> getBizDomain() {
+                    return BizDomain;
+                }
+
+                public void setBizDomain(List<String> bizDomain) {
+                    BizDomain = bizDomain;
+                }
+
+                public List<String> getUDPDomain() {
+                    return UDPDomain;
+                }
+
+                public void setUDPDomain(List<String> UDPDomain) {
+                    this.UDPDomain = UDPDomain;
+                }
+            }
 
 			public static class Category {
 
@@ -318,6 +336,8 @@ public class ApiGetAuthorizerInfoResult extends BaseResult {
 
 		private String authorizer_appid;
 
+		private String authorizer_refresh_token;
+
 		private List<FuncInfo> func_info;
 
 		public String getAuthorizer_appid() {
@@ -335,5 +355,13 @@ public class ApiGetAuthorizerInfoResult extends BaseResult {
 		public void setFunc_info(List<FuncInfo> func_info) {
 			this.func_info = func_info;
 		}
-	}
+
+        public String getAuthorizer_refresh_token() {
+            return authorizer_refresh_token;
+        }
+
+        public void setAuthorizer_refresh_token(String authorizer_refresh_token) {
+            this.authorizer_refresh_token = authorizer_refresh_token;
+        }
+    }
 }
