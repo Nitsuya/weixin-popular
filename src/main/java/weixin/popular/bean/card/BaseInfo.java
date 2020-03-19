@@ -231,11 +231,16 @@ public class BaseInfo {
 	private Boolean useAllLocations;
 
 	/**
+	 * 开启进入卡券推送事件 2.8.32
+	 */
+	@JSONField(name = "need_push_on_view")
+	private Boolean needPushOnView;
+
+	/**
 	 * 支付信息 2.8.32
 	 */
 	@JSONField(name = "pay_info")
 	private PayInfo payInfo;
-
 
 	/**
 	 * 卡券的商户logo。
@@ -703,5 +708,14 @@ public class BaseInfo {
 
 	public void setPayInfo(PayInfo payInfo) {
 		this.payInfo = payInfo;
+	}
+
+
+	public Boolean getNeedPushOnView() {
+		return needPushOnView;
+	}
+
+	public void setNeedPushOnView(Boolean needPushOnView) {
+		this.needPushOnView = needPushOnView;
 	}
 }
