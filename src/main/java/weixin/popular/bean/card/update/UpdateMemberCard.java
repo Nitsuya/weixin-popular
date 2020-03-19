@@ -3,6 +3,7 @@
  */
 package weixin.popular.bean.card.update;
 
+import com.alibaba.fastjson.annotation.JSONField;
 import weixin.popular.bean.card.MemberCard;
 
 /**
@@ -12,6 +13,7 @@ import weixin.popular.bean.card.MemberCard;
 public class UpdateMemberCard extends AbstractUpdate {
 	
 	/** 会员卡 */
+	@JSONField(name = "member_card")
 	private MemberCard memberCard;
 
 	public MemberCard getMemberCard() {
