@@ -14,16 +14,25 @@ public class MemberCard extends AbstractInfo {
 	// 4种微信会员卡激活模式
 	// ────────────────────────────────────────────────────────────────────────────────────────────────────────────
 	// [自动激活] autoActivate
-	// 注册新会员　─>　跳转官方开卡页面填写资料　─>　用户点击激活　┌>　微信自动激活会员卡
-	//　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　└>　异步推送已激活事件
+	// 会员卡主页{点击领取}　┌>　会员卡主页{已激活}
+	//　　　　　　　　　　   └>　异步推送[user_get_card]事件
+	// 注: 1.无法开启官方开卡字段
+	// ────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
 	// ────────────────────────────────────────────────────────────────────────────────────────────────────────────
 	// [接口激活] activateUrl 或 activateAppBrandUserName + activateAppBrandPass
-	// 注册新会员　┌>　跳转自定义页面或小程序填写资料　─>　提交　─>　使用Code主动激活会员卡
-	// 　　　　　　└>　异步推送事件携带Code
+	// 会员卡主页{点击领取}　┌>　会员卡主页{未激活}{点击激活}　─>　跳转网页/小程序页面,携带参数　─>　自己处理逻辑,Code主动激活会员卡
+	// 　　　　　　　　　　  └>　异步推送[user_get_card]事件
+	// 注:　1. 无法开启官方开卡字段
+	//     2. 请把 autoActivate 和 wxActivate 设置为 false, 防止这种模式不生效的问题
+	// ────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
 	// ────────────────────────────────────────────────────────────────────────────────────────────────────────────
 	// [一键激活] wxActivate
-	// 注册新会员　─>　跳转官方开卡页面填写资料　─>　用户点击激活 ┌>　跳转到会员卡
-	// 　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　└>　异步推送事件携带Code,使用Code主动激活会员卡
+	// 会员卡主页{点击领取}　┌>　会员卡主页{未激活}{点击激活}　─>　跳转官方页面填写开卡字段{点击激活}　┌>　会员卡主页{已激活}
+	// 　　　　　　　　　　  └>　异步推送[user_get_card]事件　　　　　　　　　　　　　　　　　　　　 └>　异步推送[submit_membercard_user_info]事件
+	// ────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
 	// ────────────────────────────────────────────────────────────────────────────────────────────────────────────
 	// [跳转型一键激活] wxActivate + wxActivateAfterSubmit + wxActivateAfterSubmitUrl
 	// 注册新会员　─>　跳转官方开卡页面填写资料　─>　用户点击激活　─>　跳转自定义页面携带参数,换取用户填写资料,使用Code主动激活会员卡
@@ -68,7 +77,7 @@ public class MemberCard extends AbstractInfo {
 	 * 是否支持跳转型一键激活
 	 * */
 	@JSONField(name = "wx_activate_after_submit")
-	private String wxActivateAfterSubmit;
+	private Boolean wxActivateAfterSubmit;
 
 	/**
 	 * [跳转型一键激活]
@@ -251,11 +260,11 @@ public class MemberCard extends AbstractInfo {
 		this.wxActivate = wxActivate;
 	}
 
-	public String getWxActivateAfterSubmit() {
+	public Boolean getWxActivateAfterSubmit() {
 		return wxActivateAfterSubmit;
 	}
 
-	public void setWxActivateAfterSubmit(String wxActivateAfterSubmit) {
+	public void setWxActivateAfterSubmit(Boolean wxActivateAfterSubmit) {
 		this.wxActivateAfterSubmit = wxActivateAfterSubmit;
 	}
 
