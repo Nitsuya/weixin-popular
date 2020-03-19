@@ -30,6 +30,7 @@ import weixin.popular.bean.card.landingpage.create.LandingPageCreateResult;
 import weixin.popular.bean.card.membercard.activate.MembercardActivate;
 import weixin.popular.bean.card.membercard.activatetempinfo.get.MembercardActivatetempinfoGetResult;
 import weixin.popular.bean.card.membercard.activateuserform.set.MembercardActivateuserformSet;
+import weixin.popular.bean.card.membercard.unactivate.MembercardUnactivate;
 import weixin.popular.bean.card.membercard.updateuser.MembercardUpdateuser;
 import weixin.popular.bean.card.membercard.updateuser.MembercardUpdateuserResult;
 import weixin.popular.bean.card.membercard.userinfo.get.MembercardUserinfoGet;
@@ -728,6 +729,34 @@ public class CardAPI extends BaseAPI {
 		return membercardActivate(accessToken, JsonUtil.toJSONString(membercardActivate));
 	}
 
+    /**
+     * 取消激活会员卡
+     * @since 2.8.32
+     * @param accessToken accessToken
+     * @param postJson postJson
+     * @return
+     */
+    public static BaseResult membercardUnactivate(String accessToken, String postJson){
+        HttpUriRequest httpUriRequest = RequestBuilder
+                .post()
+                .setHeader(jsonHeader)
+                .setUri(BASE_URI + "/card/membercard/unactivate")
+                .addParameter(PARAM_ACCESS_TOKEN, API.accessToken(accessToken))
+                .setEntity(new StringEntity(postJson, Charset.forName("utf-8")))
+                .build();
+        return LocalHttpClient.executeJsonResult(httpUriRequest, BaseResult.class);
+    }
+
+    /**
+     * 取消激活会员卡
+     * @since 2.8.32
+     * @param accessToken accessToken
+     * @param membercardUnactivate membercardUnactivate
+     * @return
+     */
+    public static BaseResult membercardUnactivate(String accessToken, MembercardUnactivate membercardUnactivate){
+        return membercardUnactivate(accessToken, JsonUtil.toJSONString(membercardUnactivate));
+    }
 
 	/**
 	 * 设置开卡字段接口

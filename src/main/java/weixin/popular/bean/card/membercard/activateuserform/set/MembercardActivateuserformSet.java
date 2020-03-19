@@ -50,4 +50,20 @@ public class MembercardActivateuserformSet {
     public void setBindOldCard(BindOldCard bindOldCard) {
         this.bindOldCard = bindOldCard;
     }
+
+    public Form getRequiredForm() {
+        return requiredForm;
+    }
+
+    public void setRequiredForm(Form requiredForm) {
+        this.requiredForm = requiredForm;
+    }
+
+    public Form getOptionalForm() {
+        return optionalForm;
+    }
+
+    public void setOptionalForm(Form optionalForm) {
+        this.optionalForm = optionalForm;
+    }
 }
