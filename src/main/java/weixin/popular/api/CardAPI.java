@@ -784,7 +784,7 @@ public class CardAPI extends BaseAPI {
 	 * @return
 	 */
 	public static BaseResult membercardActivateuserformSet(String accessToken, MembercardActivateuserformSet membercardActivateuserformSet){
-		return membercardActivate(accessToken, JsonUtil.toJSONString(membercardActivateuserformSet));
+		return membercardActivateuserformSet(accessToken, JsonUtil.toJSONString(membercardActivateuserformSet));
 	}
 
 	/**
@@ -929,7 +929,7 @@ public class CardAPI extends BaseAPI {
 	 * @return
 	 */
 	public static BaseResult paygiftcardDeleteByRuleId(String accessToken, String ruleId){
-		return membercardActivatetempinfoGet(accessToken, String.format("{\"rule_id\": \"%s\"}", ruleId));
+		return paygiftcardDelete(accessToken, String.format("{\"rule_id\": \"%s\"}", ruleId));
 	}
 
 
