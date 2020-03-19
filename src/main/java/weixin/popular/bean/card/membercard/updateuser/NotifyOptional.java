@@ -26,43 +26,43 @@ public class NotifyOptional {
     @JSONField(name = "is_notify_custom_field3")
     private Boolean isNotifyCustomField3;
 
-    public Boolean getNotifyBalance() {
+    public Boolean getIsNotifyBalance() {
         return isNotifyBalance;
     }
 
-    public void setNotifyBalance(Boolean notifyBalance) {
-        isNotifyBalance = notifyBalance;
+    public void setIsNotifyBalance(Boolean isNotifyBalance) {
+        isNotifyBalance = isNotifyBalance;
     }
 
-    public Boolean getNotifyBonus() {
+    public Boolean getIsNotifyBonus() {
         return isNotifyBonus;
     }
 
-    public void setNotifyBonus(Boolean notifyBonus) {
-        isNotifyBonus = notifyBonus;
+    public void setIsNotifyBonus(Boolean isNotifyBonus) {
+        isNotifyBonus = isNotifyBonus;
     }
 
-    public Boolean getNotifyCustomField1() {
+    public Boolean getIsNotifyCustomField1() {
         return isNotifyCustomField1;
     }
 
-    public void setNotifyCustomField1(Boolean notifyCustomField1) {
-        isNotifyCustomField1 = notifyCustomField1;
+    public void setIsNotifyCustomField1(Boolean isNotifyCustomField1) {
+        isNotifyCustomField1 = isNotifyCustomField1;
     }
 
-    public Boolean getNotifyCustomField2() {
+    public Boolean getIsNotifyCustomField2() {
         return isNotifyCustomField2;
     }
 
-    public void setNotifyCustomField2(Boolean notifyCustomField2) {
-        isNotifyCustomField2 = notifyCustomField2;
+    public void setIsNotifyCustomField2(Boolean isNotifyCustomField2) {
+        isNotifyCustomField2 = isNotifyCustomField2;
     }
 
-    public Boolean getNotifyCustomField3() {
+    public Boolean getIsNotifyCustomField3() {
         return isNotifyCustomField3;
     }
 
-    public void setNotifyCustomField3(Boolean notifyCustomField3) {
-        isNotifyCustomField3 = notifyCustomField3;
+    public void setIsNotifyCustomField3(Boolean isNotifyCustomField3) {
+        isNotifyCustomField3 = isNotifyCustomField3;
     }
 }

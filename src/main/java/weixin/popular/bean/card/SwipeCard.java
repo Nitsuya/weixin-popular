@@ -11,11 +11,11 @@ public class SwipeCard {
     @JSONField(name = "is_swipe_card")
     private Boolean isSwipeCard;
 
-    public Boolean getSwipeCard() {
+    public Boolean getIsSwipeCard() {
         return isSwipeCard;
     }
 
-    public void setSwipeCard(Boolean swipeCard) {
-        isSwipeCard = swipeCard;
+    public void setIsSwipeCard(Boolean isSwipeCard) {
+        isSwipeCard = isSwipeCard;
     }
 }
