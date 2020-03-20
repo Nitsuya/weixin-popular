@@ -28,6 +28,8 @@ import weixin.popular.bean.card.get.*;
 import weixin.popular.bean.card.landingpage.create.LandingPageCreate;
 import weixin.popular.bean.card.landingpage.create.LandingPageCreateResult;
 import weixin.popular.bean.card.membercard.activate.MembercardActivate;
+import weixin.popular.bean.card.membercard.activate.geturl.MembercardActivateGeturl;
+import weixin.popular.bean.card.membercard.activate.geturl.MembercardActivateGeturlResult;
 import weixin.popular.bean.card.membercard.activatetempinfo.get.MembercardActivatetempinfoGetResult;
 import weixin.popular.bean.card.membercard.activateuserform.set.MembercardActivateuserformSet;
 import weixin.popular.bean.card.membercard.unactivate.MembercardUnactivate;
@@ -698,6 +700,35 @@ public class CardAPI extends BaseAPI {
 	 */
 	public static UserGetCardListResult userGetCardList(String accessToken, UserGetCardList userGetCardList) {
 		return userGetCardList(accessToken, JsonUtil.toJSONString(userGetCardList));
+	}
+
+	/**
+	 * 获取激活会员卡链接
+	 * @since 2.8.32
+	 * @param accessToken accessToken
+	 * @param postJson postJson
+	 * @return
+	 */
+	public static MembercardActivateGeturlResult membercardActivateGeturl(String accessToken, String postJson){
+		HttpUriRequest httpUriRequest = RequestBuilder
+				.post()
+				.setHeader(jsonHeader)
+				.setUri(BASE_URI + "/card/membercard/activate/geturl")
+				.addParameter(PARAM_ACCESS_TOKEN, API.accessToken(accessToken))
+				.setEntity(new StringEntity(postJson, Charset.forName("utf-8")))
+				.build();
+		return LocalHttpClient.executeJsonResult(httpUriRequest, MembercardActivateGeturlResult.class);
+	}
+
+	/**
+	 * 获取激活会员卡链接
+	 * @since 2.8.32
+	 * @param accessToken accessToken
+	 * @param membercardActivateGeturl membercardActivateGeturl
+	 * @return
+	 */
+	public static MembercardActivateGeturlResult membercardActivateGeturl(String accessToken, MembercardActivateGeturl membercardActivateGeturl){
+		return membercardActivateGeturl(accessToken, JsonUtil.toJSONString(membercardActivateGeturl));
 	}
 
 	/**
