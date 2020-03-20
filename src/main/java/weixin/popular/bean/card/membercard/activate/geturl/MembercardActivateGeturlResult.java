@@ -9,4 +9,12 @@ import weixin.popular.bean.BaseResult;
 public class MembercardActivateGeturlResult extends BaseResult {
     /**	返回的url，内含调用开卡插件所需的参数 */
     private String url;
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
 }
