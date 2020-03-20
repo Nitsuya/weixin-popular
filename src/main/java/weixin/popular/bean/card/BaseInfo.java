@@ -159,6 +159,18 @@ public class BaseInfo {
 	private String centerUrl;
 
 	/**
+	 * 顶部居中的小程序user_name [原始ID+@app] 2.8.32
+	 */
+	@JSONField(name = "center_app_brand_user_name")
+	private String centerAppBrandUserName;
+
+	/**
+	 * 顶部居中的小程序页面 2.8.32
+	 */
+	@JSONField(name = "center_app_brand_pass")
+	private String centerAppBrandPass;
+
+	/**
 	 * 自定义跳转外链的入口名字， 如“立即使用”。详情见活用自定义入口
 	 */
 	@JSONField(name = "custom_url_name")
@@ -545,6 +557,22 @@ public class BaseInfo {
 	 */
 	public void setCenterUrl(String centerUrl) {
 		this.centerUrl = centerUrl;
+	}
+
+	public String getCenterAppBrandUserName() {
+		return centerAppBrandUserName;
+	}
+
+	public void setCenterAppBrandUserName(String centerAppBrandUserName) {
+		this.centerAppBrandUserName = centerAppBrandUserName;
+	}
+
+	public String getCenterAppBrandPass() {
+		return centerAppBrandPass;
+	}
+
+	public void setCenterAppBrandPass(String centerAppBrandPass) {
+		this.centerAppBrandPass = centerAppBrandPass;
 	}
 
 	/**
