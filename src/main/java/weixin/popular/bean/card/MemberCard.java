@@ -20,7 +20,7 @@ public class MemberCard extends AbstractInfo {
 	// ────────────────────────────────────────────────────────────────────────────────────────────────────────────
 
 	// ────────────────────────────────────────────────────────────────────────────────────────────────────────────
-	// [接口激活] activateUrl 或 activateAppBrandUserName + activateAppBrandPass
+	// [接口激活] activateUrl 或 (activateAppBrandUserName + activateAppBrandPass)
 	// 会员卡主页{点击领取}　┌>　会员卡主页{未激活}{点击激活}　─>　跳转网页/小程序页面,携带参数　─>　自己处理逻辑,Code主动激活会员卡
 	// 　　　　　　　　　　  └>　异步推送[user_get_card]事件
 	// 注:　1. 无法开启官方开卡字段
@@ -35,7 +35,8 @@ public class MemberCard extends AbstractInfo {
 
 	// ────────────────────────────────────────────────────────────────────────────────────────────────────────────
 	// [跳转型一键激活] wxActivate + wxActivateAfterSubmit + wxActivateAfterSubmitUrl
-	// 注册新会员　─>　跳转官方开卡页面填写资料　─>　用户点击激活　─>　跳转自定义页面携带参数,换取用户填写资料,使用Code主动激活会员卡
+	// 会员卡主页{点击领取}　┌>　会员卡主页{未激活}{点击激活}　─>　跳转官方页面填写开卡字段{点击激活}　─>　跳转网页,携带参数,自己处理逻辑,Code主动激活会员卡
+	// 　　　　　　　　　　  └>　异步推送[user_get_card]事件
 	// ────────────────────────────────────────────────────────────────────────────────────────────────────────────
 	/**
 	 * [自动激活]
@@ -85,23 +86,6 @@ public class MemberCard extends AbstractInfo {
 	 * */
 	@JSONField(name = "wx_activate_after_submit_url")
 	private String wxActivateAfterSubmitUrl;
-
-	/**
-	 * TODO 待测试
-	 * [跳转型一键激活]
-	 * 跳转型一键激活跳转的小程序user_name
-	 * */
-	@JSONField(name = "wx_activate_after_submit_app_brand_user_name")
-	private String wxActivateAfterSubmitAppBrandUserName;
-
-	/**
-	 * TODO 待测试
-	 * [跳转型一键激活]
-	 * 跳转型一键激活跳转的小程序path
-	 * */
-	@JSONField(name = "wx_activate_after_submit_app_brand_pass")
-	private String wxActivateAfterSubmitAppBrandPass;
-
 	// endregion =======================================================================================================
 
 
@@ -150,15 +134,15 @@ public class MemberCard extends AbstractInfo {
     //----- 自定义
 	/** 自定义信息类目1 */
 	@JSONField(name = "custom_field1")
-	private CustomCell customField1;
+	private CustomField customField1;
 
 	/** 自定义信息类目2 */
 	@JSONField(name = "custom_field2")
-	private CustomCell customField2;
+	private CustomField customField2;
 
 	/** 自定义信息类目3 */
 	@JSONField(name = "custom_field3")
-	private CustomCell customField3;
+	private CustomField customField3;
 	// endregion =======================================================================================================
 
 
@@ -276,22 +260,6 @@ public class MemberCard extends AbstractInfo {
 		this.wxActivateAfterSubmitUrl = wxActivateAfterSubmitUrl;
 	}
 
-	public String getWxActivateAfterSubmitAppBrandUserName() {
-		return wxActivateAfterSubmitAppBrandUserName;
-	}
-
-	public void setWxActivateAfterSubmitAppBrandUserName(String wxActivateAfterSubmitAppBrandUserName) {
-		this.wxActivateAfterSubmitAppBrandUserName = wxActivateAfterSubmitAppBrandUserName;
-	}
-
-	public String getWxActivateAfterSubmitAppBrandPass() {
-		return wxActivateAfterSubmitAppBrandPass;
-	}
-
-	public void setWxActivateAfterSubmitAppBrandPass(String wxActivateAfterSubmitAppBrandPass) {
-		this.wxActivateAfterSubmitAppBrandPass = wxActivateAfterSubmitAppBrandPass;
-	}
-
 	public boolean isSupplyBonus() {
 		return supplyBonus;
 	}
@@ -356,27 +324,27 @@ public class MemberCard extends AbstractInfo {
 		this.balanceAppBrandPass = balanceAppBrandPass;
 	}
 
-	public CustomCell getCustomField1() {
+	public CustomField getCustomField1() {
 		return customField1;
 	}
 
-	public void setCustomField1(CustomCell customField1) {
+	public void setCustomField1(CustomField customField1) {
 		this.customField1 = customField1;
 	}
 
-	public CustomCell getCustomField2() {
+	public CustomField getCustomField2() {
 		return customField2;
 	}
 
-	public void setCustomField2(CustomCell customField2) {
+	public void setCustomField2(CustomField customField2) {
 		this.customField2 = customField2;
 	}
 
-	public CustomCell getCustomField3() {
+	public CustomField getCustomField3() {
 		return customField3;
 	}
 
-	public void setCustomField3(CustomCell customField3) {
+	public void setCustomField3(CustomField customField3) {
 		this.customField3 = customField3;
 	}
 

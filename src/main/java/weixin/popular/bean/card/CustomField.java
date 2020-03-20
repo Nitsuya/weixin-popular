@@ -39,4 +39,44 @@ public class CustomField {
     /** 点击类目跳转小程序页面 */
     @JSONField(name = "app_brand_pass")
     private String appBrandPass;
+
+    public String getNameType() {
+        return nameType;
+    }
+
+    public void setNameType(String nameType) {
+        this.nameType = nameType;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public String getAppBrandUserName() {
+        return appBrandUserName;
+    }
+
+    public void setAppBrandUserName(String appBrandUserName) {
+        this.appBrandUserName = appBrandUserName;
+    }
+
+    public String getAppBrandPass() {
+        return appBrandPass;
+    }
+
+    public void setAppBrandPass(String appBrandPass) {
+        this.appBrandPass = appBrandPass;
+    }
 }

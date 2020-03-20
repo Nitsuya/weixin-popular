@@ -26,4 +26,44 @@ public class CustomCell {
     /** 入口跳转小程序页面 */
     @JSONField(name = "app_brand_pass")
     private String appBrandPass;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getTips() {
+        return tips;
+    }
+
+    public void setTips(String tips) {
+        this.tips = tips;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public String getAppBrandUserName() {
+        return appBrandUserName;
+    }
+
+    public void setAppBrandUserName(String appBrandUserName) {
+        this.appBrandUserName = appBrandUserName;
+    }
+
+    public String getAppBrandPass() {
+        return appBrandPass;
+    }
+
+    public void setAppBrandPass(String appBrandPass) {
+        this.appBrandPass = appBrandPass;
+    }
 }
